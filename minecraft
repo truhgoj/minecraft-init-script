@@ -45,25 +45,25 @@ fi
 ## Settings
 
 # Nice looking name of service for script to report back to users
-SERVERNAME="CraftBukkit"
+SERVERNAME="Minecraft"
 # Filename of server binary
-SERVICE="craftbukkit.jar"
+SERVICE="minecraft_server.jar"
 # URL of server executable for update checking - http://cbukk.it/craftbukkit.jar is the recommended latest Craftbukkit URL
-SERVER_URL="http://cbukk.it/craftbukkit.jar"
+#SERVER_URL="http://cbukk.it/craftbukkit.jar"
 # Username of non-root user who will run the server
-USERNAME="bukkit"
+USERNAME="minecraft"
 # Path of server binary and world
-MCPATH="/home/bukkit/craftbukkit"
+MCPATH="/home/$USERNAME/cc_1.6.2"
 # Number of CPU cores to thread across if using multithreaded garbage collection
-CPU_COUNT="2"
+CPU_COUNT="1"
 # Where backups go
-BACKUPPATH="/home/bukkit/backups"
+BACKUPPATH="/home/$USERNAME/backups"
 # Find the world name from the existing server file
 WORLDNAME="$(cat $MCPATH/server.properties | grep -E 'level-name' | sed -e s/.*level-name=//)"
 # Find the port number from the existing server file
 SERVERPORT="$(cat $MCPATH/server.properties | grep -E 'server-port' | sed -e s/.*server-port=//)"
 # Name of Screen session
-SCRNAME="bukkit"
+SCRNAME="minecraft"
 
 ## The Java command to run the server
 
@@ -72,7 +72,7 @@ SCRNAME="bukkit"
 
 # This is what I run my server with. Tune your RAM usage accordingly
 # Tested fastest GC - Default parallel new gen collector, plus parallel old gen collector
-INVOCATION="java -Xms2048M -Xmx2048M -Djava.net.preferIPv4Stack=true -XX:MaxPermSize=128M -XX:-DisableExplicitGC -XX:+UseParallelOldGC -XX:ParallelGCThreads=$CPU_COUNT -XX:+AggressiveOpts -XX:+UseCompressedStrings -jar $SERVICE nogui"
+INVOCATION="java -Xms1024M -Xmx1024M -jar $SERVICE nogui"
 
 # I removed these "performance" commands as I don't see any difference with them
 # -XX:+UseFastAccessorMethods -XX:+UseAdaptiveGCBoundary
@@ -212,6 +212,7 @@ mc_saveon() {
 ## Checks for update, exits if update not required, updates if the server is not running
 
 mc_updatecheck() {
+  exit 0; # disable updates
   echo " * Downloading latest $SERVERNAME executable..."
   as_user "cd \"$MCPATH\" && curl -# -L -o \"$MCPATH/$SERVICE.update\" \"$SERVER_URL\""
 
@@ -404,12 +405,12 @@ case "$1" in
  mc_start
  ;;
   update)
- mc_updatecheck
- mc_stop
- mc_backupmap
- mc_backupexe
- mc_updatedo
- mc_start
+ #mc_updatecheck
+ #mc_stop
+ #mc_backupmap
+ #mc_backupexe
+ #mc_updatedo
+ #mc_start
  ;;
   backup)
  mc_checkbackup "$2"
