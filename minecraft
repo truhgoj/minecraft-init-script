@@ -72,7 +72,7 @@ SCRNAME="minecraft"
 
 # This is what I run my server with. Tune your RAM usage accordingly
 # Tested fastest GC - Default parallel new gen collector, plus parallel old gen collector
-INVOCATION="java -Xms1024M -Xmx1024M -jar $SERVICE nogui"
+INVOCATION="java -Xms512M -Xmx768M -jar $SERVICE nogui"
 
 # I removed these "performance" commands as I don't see any difference with them
 # -XX:+UseFastAccessorMethods -XX:+UseAdaptiveGCBoundary
